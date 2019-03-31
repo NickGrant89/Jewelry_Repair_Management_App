@@ -1,0 +1,69 @@
+extends layout
+
+block content
+  // Begin Page Content
+  .container-fluid
+    // Page Heading
+    .d-sm-flex.align-items-center.justify-content-between.mb-4
+      h1.h3.mb-0.text-gray-800 
+    // Content Row
+    .row
+      // Content Column
+      .col-lg-12.mb-4
+        ul#myTab.nav.nav-tabs(role='tablist')
+          li.nav-item
+            a#home-tab.nav-link.active(data-toggle='tab', href='#home', role='tab', aria-controls='home', aria-selected='true') Devices
+          li.nav-item
+            a#profile-tab.nav-link(data-toggle='tab', href='#profile', role='tab', aria-controls='profile', aria-selected='false') Register
+          li.nav-item
+            a#contact-tab.nav-link(data-toggle='tab', href='#contact', role='tab', aria-controls='contact', aria-selected='false') Reports
+        #myTabContent.tab-content
+          #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
+            .album.py-5.bg-light
+              // Content Row
+              .row
+                // Content Column
+                .col-lg-12.mb-4
+                    .row
+                      .col-md-4
+                        // Card
+                        .card.shadow.mb-4
+                          .card-header.py-3
+                            h6.m-0.font-weight-bold.text-primary Till 1
+                          .card-body
+                      .col-md-4
+                        // Card
+                        .card.shadow.mb-4
+                          .card-header.py-3
+                            h6.m-0.font-weight-bold.text-primary Till 2
+                          .card-body
+                      .col-md-4
+                        // Card
+                        .card.shadow.mb-4
+                          .card-header.py-3
+                            h6.m-0.font-weight-bold.text-primary Till 3
+                          .card-body
+          #profile.tab-pane.fade(role='tabpanel', aria-labelledby='profile-tab')
+            // Content Row
+            .row
+              // Content Column
+              .col-lg-12.mb-4
+            // DataTales Example
+            .card.shadow.mb-4
+              .card-header.py-3
+                h6.m-0.font-weight-bold.text-primary Register Device
+              .card-body
+
+          #contact.tab-pane.fade(role='tabpanel', aria-labelledby='contact-tab')
+            // Content Row
+            .row
+              // Content Column
+              .col-lg-12.mb-4
+            // DataTales Example
+            .card.shadow.mb-4
+              .card-header.py-3
+                h6.m-0.font-weight-bold.text-primary Reporting
+              .card-body
+                
+      // /.container-fluid
+      // End of Main Content

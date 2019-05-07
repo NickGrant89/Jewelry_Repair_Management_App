@@ -10,13 +10,7 @@ let Company = require('../models/company');
 
 let Site = require('../models/site');
 
-
-
 let User = require('../models/user');
-
-
-
-
 
 //GET Method for all company 
 

@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const multer = require('multer');
+//const upload = multer({dest: '/uploads/'});
 
 //Passport Config
 require('../config/passport')(passport);

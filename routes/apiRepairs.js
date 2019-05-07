@@ -7,6 +7,8 @@ const checkAuth = require('../middleware/check-auth');
 // Import repair Model
 let Repair = require('../models/repair');
 
+let Outworker = require('../models/outworker');
+
 //GET Get all repairs
 
 router.get('/', (req, res) => {
@@ -29,8 +31,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     Repair.findById(req.params.id, function(err, repair){
         if(!repair) return res.status(404).send('The repair with the given ID cannot be found!'), console.log('ID not found!')
-            res.send(repair);           
-                
+            res.send(repair);     
         });  
 });
 

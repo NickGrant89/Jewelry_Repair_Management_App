@@ -3,9 +3,6 @@ const router = express.Router();
 
 //Access Control
 const ensureAuthenticated = require('../middleware/login-auth');
- 
-
-
 
 let User = require('../models/user');
 

@@ -3,9 +3,6 @@ const router = express.Router();
 
 //Access Control
 const ensureAuthenticated = require('../middleware/login-auth');
- 
-
-
 
 let User = require('../models/user');
 
@@ -13,34 +10,9 @@ let Site = require('../models/site');
 
 let Company = require('../models/company');
 
+let Repair = require('../models/repair');
+
 const of = require('../middleware/onec-functions');
-
-
-//Device check in view
-router.get('/checkin', ensureAuthenticated, function(req, res){
-    User.findById(req.user.id, function (err, user) {
-        if(user.admin != 'Super Admin'){
-            req.flash('danger', 'Unauthorized');
-            res.redirect('/');
-        }
-        else{
-            Company.find({}, function(err, companies){
-                const q = {"status": "Disabled"}
-            Device.find(q, function(err, devices){
-                if(err){
-                    console.log(err)
-                }else{
-                    res.render('devices_checkin', {
-                        title:'Device Check-In',
-                        devices: devices,
-                        companies:companies,
-                    });
-                }
-            });
-        });
-        }
-    });    
-});
 
 
 
@@ -75,56 +47,21 @@ router.get('/', ensureAuthenticated, function(req, res){
 });
 
 
-//GET display add device page with form
-
-router.get('/add', ensureAuthenticated, function(req, res){
-    Site.find({}, function(err, sites){
-        Company.find({}, function(err, companies){
-            res.render('add_device', {
-                title:'Add Device',
-                sites: sites,
-                companies: companies,
-
-            });
-        });
-    });
-});
-
-//Get single device page
+//Get single repair page
 
 router.get('/:id', ensureAuthenticated, (req, res) => {
-    
-    function hello2(type, check) {
-         if(type == check){
-             return 'true';
-         }
-         return false;
- }
-    Device.findById(req.params.id, function(err, device){
+    Repair.findById(req.params.id, function(err, repair){
         User.findById(req.user.id, function(err, user){
             if(err){res.redirect('/')}
             if(user.admin == 'Admin' || 'User'){
-                Site.find({'company': user.company}, function(err, sites){
-                    Company.find({'name': user.company}, function(err, companies){
-                        let check = device.deviceSettings.fileTransfer.ftStatus;
-                        let type = device.deviceSettings.fileTransfer.type;
-                      
-                        //console.log(type);
-                        res.render('device', {
-                            device:device,
-                            sites: sites,
-                            companies: companies,
-                            title: device.pcname,
-                            check:check,
-                            clientSetTrue:hello2(device.deviceSettings.fileTransfer.type, 'client'),
-                            serverSetTure:hello2(device.deviceSettings.fileTransfer.type, 'server'),
-                        });
-                        //console.log(device);
-                    
-                    });
+
+                //console.log(type);
+                res.render('repair', {
+                    repair: repair,
+                    title: repair.decription,
+
                 });
-          
-             
+                //console.log(device);
             }
         });     
     });

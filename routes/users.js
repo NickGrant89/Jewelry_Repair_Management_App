@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const multer = require('multer');
+//const upload = multer({dest: '/uploads/'});
 
 //Passport Config
 require('../config/passport')(passport);
@@ -30,7 +32,6 @@ router.get('/', ensureAuthenticated, function(req, res){
         } 
         
         const q = {'company': user.company}
-        console.log(q);
         User.find(q, function(err, users){
             Company.find({'name': user.company}, function(err, companies){
             res.render('users', {
@@ -219,7 +220,7 @@ router.post('/register', [
   user.password = req.body.password;
   user.password2 = req.body.password2;
 
-  console.log(user);
+  //console.log(user);
 
   bcrypt.genSalt(10, function(errors, salt){
         bcrypt.hash(user.password, salt, function(err, hash){
@@ -227,7 +228,7 @@ router.post('/register', [
                 console.log(err);
             }else{
                 user.password = hash;
-                console.log(hash)
+                //console.log(hash)
 
                 user.save(function(err){
                     if(errors){

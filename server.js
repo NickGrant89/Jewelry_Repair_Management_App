@@ -15,7 +15,7 @@ const helmet = require('helmet');
 
 // This calls the Device model to intergate the DB
 
-const ensureAuthenticated = require('../onecEnterprise/middleware/login-auth')
+const ensureAuthenticated = require('./middleware/login-auth')
 
 let Site = require('./models/site');
 
@@ -69,6 +69,8 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(express.static(path.join(__dirname, 'NewSB')))
+
+app.use('/uploads', express.static('uploads'));
 
 //Express session Middleware
 
@@ -146,7 +148,6 @@ app.get('/', ensureAuthenticated, function(req, res){
 
 let users = require('./routes/users');
 let jwt = require('./routes/apiJWT');
-let apiFileTf = require('./routes/apiFileTransfer');
 let apiDevices = require('./routes/apiDevices');
 let apiCompany = require('./routes/apiCompany');
 let apiOutworkers = require('./routes/apiOutworkers');
@@ -155,7 +156,6 @@ let apiCustomers = require('./routes/apiCustomer');
 
 //Display Routes
 
-let companies = require('./routes/companies');
 let site = require('./routes/sites');
 let outworkers = require('./routes/outworkers');
 let repairs = require('./routes/repairs');
@@ -164,7 +164,6 @@ let admin = require('./routes/admin');
 
 
 app.use('/users', users);
-app.use('/api/v1/filetransfer/', apiFileTf);
 app.use('/api/v1/devices/', apiDevices);
 app.use('/api/v1/company/', apiCompany);
 app.use('/api/v1/outworker/', apiOutworkers);
@@ -172,7 +171,6 @@ app.use('/api/v1/repairs/', apiRepairs);
 app.use('/api/v1/customers/', apiCustomers);
 app.use('/api/v1/auth/', jwt);
 
-app.use('/companies', companies);
 app.use('/sites', site);
 app.use('/outworkers', outworkers);
 app.use('/repairs', repairs);

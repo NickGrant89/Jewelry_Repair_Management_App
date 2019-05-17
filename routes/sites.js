@@ -12,6 +12,8 @@ let User = require('../models/user');
 
 let Repair = require('../models/repair');
 
+let Outworker = require('../models/outworker');
+
 // ...rest of the initial code omitted for simplicity.
 const { check, validationResult } = require('express-validator/check');
 
@@ -103,6 +105,7 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
             Company.find({}, function(err, companies){
                 Site.find({}, function(err, site){
                     User.findById(req.user.id, function(err, user){
+                        Outworker.find({}, function(err, outworkers){
                         if(err){res.redirect('/');}
                         if(user.admin == 'Super Admin'){
                             const q = ({"site": sites.name});
@@ -132,6 +135,7 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                                         companies:companies,
                                         site:site,
                                         repairs:repairs,
+                                        outworkers: outworkers,
 
                                     });
                                 }
@@ -141,6 +145,7 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                    
                 });
             });
+        });
     });
 });
 });

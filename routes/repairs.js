@@ -52,6 +52,8 @@ router.get('/', ensureAuthenticated, function(req, res){
 router.get('/:id', ensureAuthenticated, (req, res) => {
     Repair.findById(req.params.id, function(err, repair){
         User.findById(req.user.id, function(err, user){
+            Company.find({}, function(err, companies){
+                Site.find({}, function(err, site){
             if(err){res.redirect('/')}
             if(user.admin == 'Admin' || 'User'){
 
@@ -59,10 +61,14 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                 res.render('repair', {
                     repair: repair,
                     title: repair.decription,
+                    companies:companies,
+                    site:site,
 
                 });
                 //console.log(device);
             }
+        });     
+    });
         });     
     });
 });

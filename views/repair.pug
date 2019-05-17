@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  // Begin Page Content
+  .container-fluid
+    // Page Heading
+    .d-sm-flex.align-items-center.justify-content-between.mb-4
+      h1.h3.mb-0.text-gray-800 
+    // Content Row
+    .row
+      // Content Column
+      .col-lg-12.mb-4
+        // DataTales Example
+        .card.shadow.mb-4
+          .card-header.py-3
+            h6.m-0.font-weight-bold.text-primary #{title}
+          .card-body
+            .table-responsive
+              table#dataTable.table.table-bordered(width='100%', cellspacing='15')
+                thead
+                  tr
+                    th Ticket No
+                    th Decription
+                    th Category
+                    th Item Storage
+                    th Status
+                tbody
+                  tr.odd.gradeX
+                    td
+                      a(href="/repairs/"+ repair._id)=repair.ticketno
+                    td
+                      = repair.decription
+                    td
+                      = repair.category
+                    td
+                      = repair.itemstorage
+                    td
+                      = repair.repairstatus
+  // /.container-fluid
+  // End of Main Content

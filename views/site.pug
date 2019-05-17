@@ -12,9 +12,11 @@ block content
       .col-lg-12.mb-4
         ul#myTab.nav.nav-tabs(role='tablist')
           li.nav-item
-            a#home-tab.nav-link.active(data-toggle='tab', href='#home', role='tab', aria-controls='home', aria-selected='true') Devices
+            a#home-tab.nav-link.active(data-toggle='tab', href='#home', role='tab', aria-controls='home', aria-selected='true') Outworkers
           li.nav-item
             a#profile-tab.nav-link(data-toggle='tab', href='#profile', role='tab', aria-controls='profile', aria-selected='false') Repairs
+          li.nav-item
+            a#profile-tab.nav-link(data-toggle='tab', href='#profile', role='tab', aria-controls='customer', aria-selected='false') Customers  
           li.nav-item
             a#contact-tab.nav-link(data-toggle='tab', href='#contact', role='tab', aria-controls='contact', aria-selected='false') Reports
         #myTabContent.tab-content
@@ -69,7 +71,7 @@ block content
                       each repair, i in repairs
                         tr.odd.gradeX
                           td
-                            a(href="/users/"+ user._id)=repair.ticketno
+                            a(href="/repairs/"+ repair._id)=repair.ticketno
                           td
                             = repair.decription
                           td

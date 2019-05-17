@@ -81,6 +81,10 @@ const RepairSchema = mongoose.Schema({
         type: String,
         required: false
     },
+    itemname:{
+        type: String,
+        required: false
+    },
     decription:{
         type: String,
         required: false
@@ -125,6 +129,8 @@ const RepairSchema = mongoose.Schema({
     site:{
         type: String
     },
+    repairImages:[String],
+  
     customer:{ type: mongoose.Schema.Types.ObjectId, ref: 'Customer'},
     outworkers:{ type: mongoose.Schema.Types.ObjectId, ref: 'Outworker'},
 });

@@ -110,9 +110,6 @@ const RepairSchema = mongoose.Schema({
     repairstatus:{
         type: String
     },
-    images:{
-        type: String
-    },
     datecreated:{
         type: Date,
        default: Date.now

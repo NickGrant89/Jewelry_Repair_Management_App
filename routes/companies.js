@@ -11,63 +11,57 @@ let Site = require('../models/site');
 
 let User = require('../models/user');
 
-let Outworker = require('../models/outworker');
+router.get('/add', ensureAuthenticated, function(req, res){
+    res.render('add_company', {
+    title:'Add Company',
 
-let Customer = require('../models/customer');
-
-let Repair = require('../models/repair');
-
-//GET all outworkers .
-router.get('/', ensureAuthenticated, function(req, res){
-    Company.find({}, function(err, companies){
-    User.findById(req.user.id, function(err, user){
-        if(err){res.redirect('/');}
-        /* if(user.admin == 'Super Admin'){
-            return res.redirect('/admin/companies')
-        } */
-        if(user.admin == 'Admin' || 'User'){
-            Outworker.find({}, function(err, outworkers){
-                if(err){
-                    console.log(err)
-                }else{
-                    res.render('outworkers', {
-                        title:'Outworkers',
-                        outworkers: outworkers,
-                        companies:companies,
-                    });
-                }
-            });
-        }
     });
 });
-});
 
-//Get single Outworker page
-
+//Get single company page
 router.get('/:id', ensureAuthenticated, (req, res) => {
     Company.find({}, function(err, companies){
-        Outworker.findById(req.params.id, function(err, outworker){
-            User.findById(req.user.id, function(err, user){
-                if(err){res.redirect('/')};
-                if(user.admin == 'Admin' || 'User'){
-                    //console.log(q);
+    Company.findById(req.params.id, function(err, company){
+        User.findById(req.user.id, function(err, user){
+            if(err){res.redirect('/');}
+            if(user.admin == 'Super Admin'){
+                const q = ({"company": company.name});
+                Site.find(q, function(err, sites){
                     if(err){
                         console.log(err)
                     }else{
-                        res.render('outworker', {
-                            title: outworker.companyname,
+                        res.render('company', {
+                            title: company.name,
+                            sites:sites,
+                            company:company,
                             companies:companies,
-                            outworker: outworker,
-                            
-                        }); 
+                        });
                     }
-                }
-            });
+                });
+            }
+            if(user.admin == 'Admin' || 'User'){
+                const q = ({"name": user.sites});
+                //console.log(q);
+                Site.find(q, function(err, sites){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        //console.log(company)
+                        res.render('company', {
+                            title: company.name,
+                            sites:sites,
+                            company:company,
+                            companies:companies,
+                        });
+                    }
+                });
+            }
         });
     });
 });
+});
 
-//Add outworker
+
 
 // ...rest of the initial code omitted for simplicity.
 const { check, validationResult } = require('express-validator/check');
@@ -119,7 +113,34 @@ router.post('/add', ensureAuthenticated, [
 
 });
 
+//GET Method to display all companies on page.
+router.get('/', ensureAuthenticated, function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if(err){res.redirect('/');}
+        if(user.admin == 'Super Admin'){
+            return res.redirect('/admin/companies')
+        }
+        if(user.admin == 'Admin' || 'User'){
+            const q = ({"name": user.company});
+            Company.find(q, function(err, companies){
+                if(err){
+                    console.log(err)
+                }else{
+                    res.render('companies', {
+                        title:'Company',
+                        companies: companies,
+                    });
+                }
+            });
+        }
+    });
+});
 
-
+//get 'add' company page/page
+router.get('/add', ensureAuthenticated, function(req, res){
+    res.render('add_company', {
+        title:'Add Company',
+    });
+});
 
 module.exports = router;

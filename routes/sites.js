@@ -6,11 +6,11 @@ const ensureAuthenticated = require('../middleware/login-auth');
 //User Model
 let Site = require('../models/site');
 
+
+
 let Company = require('../models/company');
 
 let User = require('../models/user');
-
-let Repair = require('../models/repair');
 
 // ...rest of the initial code omitted for simplicity.
 const { check, validationResult } = require('express-validator/check');
@@ -99,7 +99,6 @@ router.get('/', ensureAuthenticated, function(req, res){
 //Get single site page
 router.get('/:id', ensureAuthenticated, (req, res) => {
     Site.findById(req.params.id, function(err, sites){
-        Repair.find({}, function(err, repairs){
             Company.find({}, function(err, companies){
                 Site.find({}, function(err, site){
                     User.findById(req.user.id, function(err, user){
@@ -131,7 +130,6 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                                         sites:sites,
                                         companies:companies,
                                         site:site,
-                                        repairs:repairs,
 
                                     });
                                 }
@@ -142,7 +140,6 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                 });
             });
     });
-});
 });
 
 //Load edit form

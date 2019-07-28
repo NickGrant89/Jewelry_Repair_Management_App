@@ -31,7 +31,7 @@ var myInt = setInterval(function () {
 
 // This calls the Device model to intergate the DB
 
-const ensureAuthenticated = require('./middleware/login-auth')
+const ensureAuthenticated = require('../onecEnterprise/middleware/login-auth')
 
 let User = require('./models/user');
 
@@ -77,8 +77,6 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(express.static(path.join(__dirname, 'NewSB')))
-
-app.use('/uploads', express.static('uploads'));
 
 //Express session Middleware
 
@@ -144,19 +142,53 @@ app.get('/', ensureAuthenticated, function(req, res){
 //API Routes
 
 let users = require('./routes/users');
+<<<<<<< HEAD
 let relays = require('./routes/relays');
 
 
 //Display Routes
 
 
+=======
+let jwt = require('./routes/apiJWT');
+let apiFileTf = require('./routes/apiFileTransfer');
+let apiDevices = require('./routes/apiDevices');
+let apiCompany = require('./routes/apiCompany');
+let apiOutworkers = require('./routes/apiOutworkers');
+let apiRepairs = require('./routes/apiRepairs');
+let apiCustomers = require('./routes/apiCustomer');
+
+//Display Routes
+
+let companies = require('./routes/companies');
+let site = require('./routes/sites');
+let outworkers = require('./routes/outworkers');
+let repairs = require('./routes/repairs');
+let customers = require('./routes/customers');
+>>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
 let admin = require('./routes/admin');
 
 
 app.use('/users', users);
+<<<<<<< HEAD
 app.use('/relays', relays);
 
 
+=======
+app.use('/api/v1/filetransfer/', apiFileTf);
+app.use('/api/v1/devices/', apiDevices);
+app.use('/api/v1/company/', apiCompany);
+app.use('/api/v1/outworker/', apiOutworkers);
+app.use('/api/v1/repairs/', apiRepairs);
+app.use('/api/v1/customers/', apiCustomers);
+app.use('/api/v1/auth/', jwt);
+
+app.use('/companies', companies);
+app.use('/sites', site);
+app.use('/outworkers', outworkers);
+app.use('/repairs', repairs);
+app.use('/customers', customers);
+>>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
 app.use('/admin', admin);
 
 /* app.use('*', function(req, res) {

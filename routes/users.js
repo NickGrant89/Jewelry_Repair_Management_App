@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-const multer = require('multer');
-//const upload = multer({dest: '/uploads/'});
 
 //Passport Config
 require('../config/passport')(passport);
@@ -21,11 +19,32 @@ let Relay = require('../models/relay');
 
 
 //Get all users
+<<<<<<< HEAD
 router.get('/', ensureAuthenticated, function(req, res){        
     User.find({}, function(err, users){
         res.render('users', {
             title:'Users',
             users: users,
+=======
+router.get('/', ensureAuthenticated, function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if(err){
+            console.log(err)
+        }
+        if(user.admin == 'Super Admin'){
+            return res.redirect('/admin/users')
+        } 
+        
+        const q = {'company': user.company}
+        console.log(q);
+        User.find(q, function(err, users){
+            Company.find({'name': user.company}, function(err, companies){
+            res.render('users', {
+                title:'Users',
+                users: users,
+                companies:companies,
+            });
+>>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
         });
         console.log();
     }); 
@@ -247,6 +266,7 @@ router.post('/register', [
     }
 });
 
+<<<<<<< HEAD
   let facebook = new Relay();
     facebook.name = 'Facebook';
     facebook.switch = req.body.switch;
@@ -285,6 +305,9 @@ router.post('/register', [
         }
     });
     console.log(facebook, youtube);
+=======
+  console.log(user);
+>>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
 
   bcrypt.genSalt(10, function(errors, salt){
         bcrypt.hash(user.password, salt, function(err, hash){
@@ -292,7 +315,7 @@ router.post('/register', [
                 console.log(err);
             }else{
                 user.password = hash;
-                //console.log(hash)
+                console.log(hash)
 
                 user.save(function(err){
                     if(errors){

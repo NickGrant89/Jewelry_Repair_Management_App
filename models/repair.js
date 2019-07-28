@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // Repairs schema
 
-const AddCustomerSchema = mongoose.Schema({   
+const CustomerRepairSchema = mongoose.Schema({   
     name:{
         title: {type: String},
         firstname: {type: String},
@@ -34,7 +34,7 @@ const AddCustomerSchema = mongoose.Schema({
     },
 });
 
-const AddOutworkerSchema = mongoose.Schema({
+const OutworkerRepairSchema = mongoose.Schema({
        
     companyname:{
         type: String
@@ -81,6 +81,10 @@ const RepairSchema = mongoose.Schema({
         type: String,
         required: false
     },
+    itemname:{
+        type: String,
+        required: false
+    },
     decription:{
         type: String,
         required: false
@@ -106,9 +110,6 @@ const RepairSchema = mongoose.Schema({
     repairstatus:{
         type: String
     },
-    images:{
-        type: String
-    },
     datecreated:{
         type: Date,
        default: Date.now
@@ -125,10 +126,12 @@ const RepairSchema = mongoose.Schema({
     site:{
         type: String
     },
-    customer:{ type: mongoose.Schema.Types.ObjectId, ref: 'AddCustomer'},
-    outworkers:{ type: mongoose.Schema.Types.ObjectId, ref: 'AddOutworker'},
+    repairImages:[String],
+  
+    customer:{ type: mongoose.Schema.Types.ObjectId, ref: 'Customer'},
+    outworkers:{ type: mongoose.Schema.Types.ObjectId, ref: 'Outworker'},
 });
 
 let Repair = module.exports = mongoose.model('Repair', RepairSchema);
-const AddCustomer = mongoose.model('AddCustomer', AddCustomerSchema);
-const AddOutworker = mongoose.model('AddOutworker', AddOutworkerSchema);
+let CustomerRepair = mongoose.model('CustomerRepair', CustomerRepairSchema);
+let OutworkerRepair = mongoose.model('OutworkerRepair', OutworkerRepairSchema);

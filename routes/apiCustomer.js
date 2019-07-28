@@ -14,8 +14,6 @@ let Site = require('../models/site');
 
 let User = require('../models/user');
 
-let Customer = require('../models/customer');
-
 //GET Method for all customer 
 
 router.get('/', (req, res) => {

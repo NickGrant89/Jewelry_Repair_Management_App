@@ -13,8 +13,6 @@ let User = require('../models/user');
 
 let Outworker = require('../models/outworker');
 
-let Customer = require('../models/customer');
-
 let Repair = require('../models/repair');
 
 //GET all outworkers .

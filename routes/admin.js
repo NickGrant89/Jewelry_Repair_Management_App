@@ -4,7 +4,14 @@ const router = express.Router();
 //Access Control
 const ensureAuthenticated = require('../middleware/login-auth');
 
+
 let User = require('../models/user');
+
+let Site = require('../models/site');
+
+let Company = require('../models/company');
+
+const of = require('../middleware/onec-functions');
 
 //Device check in view
 router.get('/dashboard', ensureAuthenticated, function(req, res){

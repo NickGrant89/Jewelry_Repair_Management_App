@@ -3,6 +3,34 @@ const express = require('express');
 const router = express.Router();
 const Joi = require('joi');  // Joi is a validator, making code smaller//
 const checkAuth = require('../middleware/check-auth');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    
+    destination: function(req, file, cb){
+        //User.findById(req.user._id, function(err, user){
+            cb(null, './uploads/');
+        //});
+    },
+    filename: function(req, file, cb ){
+        cb(null, new Date().toISOString() + file.originalname);
+    }
+
+});
+
+const fileFilter = (req, file, cb) =>{
+    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpeg'){
+        cb(null, true);
+    }else{
+        cb(null, false);
+    }
+};
+
+const upload = multer({storage: storage, limits:{
+        fileSize: 1024 * 1024 * 5
+        },
+        fileFilter: fileFilter
+});
 
 // Import repair Model
 let Repair = require('../models/repair');
@@ -29,14 +57,13 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     Repair.findById(req.params.id, function(err, repair){
         if(!repair) return res.status(404).send('The repair with the given ID cannot be found!'), console.log('ID not found!')
-            res.send(repair);           
-                
+            res.send(repair);     
         });  
 });
 
 //POST to add a repair
 
-router.post('/', (req, res) => {
+router.post('/', checkAuth, upload.array('repairImages', 12), (req, res) => {
     /* const {error} = validaterepair(req.body);
 
     if(error){
@@ -44,7 +71,14 @@ router.post('/', (req, res) => {
         console.log(error.details[0].message);
         return; 
     }  */
-
+    //console.log(req.files);
+    var array = [];
+    for (var i in req.files) {
+        val = req.files[i];
+        array.push(val.path);
+        //console.log(val.path);
+      }
+      //console.log(array);
     let repair = new Repair();
     repair.ticketno = req.body.ticketno;
     repair.category = req.body.category;
@@ -57,15 +91,14 @@ router.post('/', (req, res) => {
         repair.deposit = req.body.deposit;
         repair.agreedvalue = req.body.agreedvale;
         repair.referance = req.body.referance;
-    repair.daterecevied = req.body.daterecevied;
     repair.itemstorage = req.body.itemstorage;
     repair.repiarstatus = req.body.repiarstatus;
     repair.images = req.body.images;
     repair.company = req.body.company;
     repair.site = req.body.site;
-    repair.outworkers = req.body.outworkers;
-    repair.customer = req.body.customer;
+    repair.repairImages = array;
     
+    repair.outworkers = req.body.outworkers;
     repair.customer = req.body.customer;
 
     repair.save(function(err){
@@ -75,6 +108,7 @@ router.post('/', (req, res) => {
         }
         else{
             res.send(repair);
+            //console.log(req.files.path);
             console.log(repair , ' Created 200');
         };
 
@@ -91,7 +125,7 @@ router.put('/:id', (req, res) => {
 
         //if(error) return res.status('404').send(error.details[0].message), console.log(error.details[0].message);
 
-        repair.ticketno = req.body.ticketno;
+    repair.ticketno = req.body.ticketno;
     repair.category = req.body.category;
     repair.decription = req.body.decription;
     repair.condition = req.body.condition;
@@ -102,12 +136,10 @@ router.put('/:id', (req, res) => {
         repair.deposit = req.body.deposit;
         repair.agreedvalue = req.body.agreedvale;
         repair.referance = req.body.referance;
-    repair.daterecevied = req.body.daterecevied;
     repair.itemstorage = req.body.itemstorage;
     repair.repiarstatus = req.body.repiarstatus;
-    repair.images = req.body.images;
-    repair.company = req.body.company;
-    repair.site = req.body.site;
+    repair.images = req.files.images;
+
     repair.outworkers = req.body.outworkers;
     repair.customer = req.body.customer;
 

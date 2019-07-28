@@ -12,9 +12,11 @@ block content
       .col-lg-12.mb-4
         ul#myTab.nav.nav-tabs(role='tablist')
           li.nav-item
-            a#home-tab.nav-link.active(data-toggle='tab', href='#home', role='tab', aria-controls='home', aria-selected='true') Devices
+            a#home-tab.nav-link.active(data-toggle='tab', href='#home', role='tab', aria-controls='home', aria-selected='true') Outworkers
           li.nav-item
-            a#profile-tab.nav-link(data-toggle='tab', href='#profile', role='tab', aria-controls='profile', aria-selected='false') Register
+            a#profile-tab.nav-link(data-toggle='tab', href='#profile', role='tab', aria-controls='profile', aria-selected='false') Repairs
+          li.nav-item
+            a#profile-tab.nav-link(data-toggle='tab', href='#profile', role='tab', aria-controls='customer', aria-selected='false') Customers  
           li.nav-item
             a#contact-tab.nav-link(data-toggle='tab', href='#contact', role='tab', aria-controls='contact', aria-selected='false') Reports
         #myTabContent.tab-content
@@ -22,27 +24,30 @@ block content
             .album.py-5.bg-light
               // Content Row
               .row
-                // Content Column
-                .col-lg-12.mb-4
-                    .row
-                      .col-md-4
-                        // Card
-                        .card.shadow.mb-4
-                          .card-header.py-3
-                            h6.m-0.font-weight-bold.text-primary Till 1
-                          .card-body
-                      .col-md-4
-                        // Card
-                        .card.shadow.mb-4
-                          .card-header.py-3
-                            h6.m-0.font-weight-bold.text-primary Till 2
-                          .card-body
-                      .col-md-4
-                        // Card
-                        .card.shadow.mb-4
-                          .card-header.py-3
-                            h6.m-0.font-weight-bold.text-primary Till 3
-                          .card-body
+                each repair, i in repairs
+                  // Content Column
+                  .col-lg-12.mb-4
+                      .row
+                        .col-md-4
+                          // Card
+                          .card.shadow.mb-4
+                            .card-header.py-3
+                              h6.m-0.font-weight-bold.text-primary 
+                              = repair.decription
+                            .card-body
+                              = repair.outworkers
+                        .col-md-4
+                          // Card
+                          .card.shadow.mb-4
+                            .card-header.py-3
+                              h6.m-0.font-weight-bold.text-primary Till 2
+                            .card-body
+                        .col-md-4
+                          // Card
+                          .card.shadow.mb-4
+                            .card-header.py-3
+                              h6.m-0.font-weight-bold.text-primary Till 3
+                            .card-body
           #profile.tab-pane.fade(role='tabpanel', aria-labelledby='profile-tab')
             // Content Row
             .row
@@ -51,8 +56,30 @@ block content
             // DataTales Example
             .card.shadow.mb-4
               .card-header.py-3
-                h6.m-0.font-weight-bold.text-primary Register Device
+                h6.m-0.font-weight-bold.text-primary Repairs
               .card-body
+                .table-responsive
+                  table#dataTable.table.table-bordered(width='100%', cellspacing='15')
+                    thead
+                      tr
+                        th Ticket No
+                        th Decription
+                        th Category
+                        th Item Storage
+                        th Status
+                    tbody
+                      each repair, i in repairs
+                        tr.odd.gradeX
+                          td
+                            a(href="/repairs/"+ repair._id)=repair.ticketno
+                          td
+                            = repair.decription
+                          td
+                            = repair.category
+                          td
+                            = repair.itemstorage
+                          td
+                            = repair.repairstatus
 
           #contact.tab-pane.fade(role='tabpanel', aria-labelledby='contact-tab')
             // Content Row
@@ -64,6 +91,7 @@ block content
               .card-header.py-3
                 h6.m-0.font-weight-bold.text-primary Reporting
               .card-body
+                
                 
       // /.container-fluid
       // End of Main Content

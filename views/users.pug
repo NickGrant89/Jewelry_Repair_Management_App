@@ -5,10 +5,12 @@ block content
   .container-fluid
     // Page Heading
     .d-sm-flex.align-items-center.justify-content-between.mb-4
-      h1.h3.mb-0.text-gray-800 
-      a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='#addUser', data-toggle='modal', data-target='#addUser')
-        i.fas.fa-download.fa-sm.text-white-50
-        |  Add User  
+      h1.h3.mb-0.text-gray-800
+      if users
+        if users.admin == 'Admin' 
+          a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='#addUser', data-toggle='modal', data-target='#addUser')
+            i.fas.fa-download.fa-sm.text-white-50
+            |  Add User  
     // Content Row
     .row
       // Content Column
@@ -25,8 +27,6 @@ block content
                     th Name
                     th Email
                     th Phone
-                    th Company
-                    th Admin
                 tbody
                   each user, i in users
                     tr.odd.gradeX
@@ -36,10 +36,6 @@ block content
                         = user.email
                       td
                         = user.phone
-                      td
-                        = user.company
-                      td
-                        = user.admin 
   // /.container-fluid
   // End of Main Content
   #editUser.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editUserLabel', aria-hidden='true')
@@ -79,20 +75,12 @@ block content
                   button.close(type='button', data-dismiss='modal', aria-label='Close')
                       span(aria-hidden='true')
               .modal-body
-                  form(method='POST', action='/users/register')
+                  form(method='POST', action='/users/register')   
                       #form-group
                           label Admin:
                           select.form-control(name='admin', type='text')
                               option User
-                              option Admin
-                                  if user
-                                      if user.admin == "Super Admin"
-                                          option Super Admin
-                      #form-group
-                          label Company:
-                          select.form-control(name='company', type='text')
-                              each company, i in companies
-                                  option #{company.name}                    
+                              option Admin    
                       #form-group
                           label Name:
                           input.form-control(name='name', type='text')
@@ -102,9 +90,6 @@ block content
                       #form-group
                           label Phone Number:
                           input.form-control(name='phone', type='text')
-                      #form-group
-                          label Username:
-                          input.form-control(name='username', type='text')
                       #form-group
                           label Password:
                           input.form-control(name='password', type='password')

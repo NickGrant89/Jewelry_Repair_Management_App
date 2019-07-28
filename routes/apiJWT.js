@@ -71,4 +71,38 @@ router.post('/login', (req, res, next) => {
     });
 }); 
 
+router.post('/register', (req, res) => {
+
+
+    let user = new User();
+  user.email = 'nickgrant1989@live.co.uk';
+  user.password = 'req.body.';
+
+
+  //console.log(user);
+
+  bcrypt.genSalt(10, function(errors, salt){
+        bcrypt.hash(user.password, salt, function(err, hash){
+            if(errors){
+                console.log(err);
+            }else{
+                user.password = hash;
+                //console.log(hash)
+
+                user.save(function(err){
+                    if(errors){
+                        console.log(err);
+                        return;
+                    }else{
+                        return res.status(200).json({
+                            message:'Register Successful',
+                        });
+                    }
+                });
+            }
+        });
+    });
+});
+
+
 module.exports = router;

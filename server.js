@@ -9,25 +9,33 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const config = require('./config/database')
 const passport = require('passport');
+const fs = require('fs');
 
 const helmet = require('helmet');
 
+/* //Write "Hello" every 500 milliseconds:
+var myInt = setInterval(function () {
+    User.find({}, 'stream streamkey facebookkey youtubekey', function(err, users){
+        // write to a new file named 2pac.txt
+        fs.writeFile('./stream.txt', users, (err) => {  
+            // throws an error, you could also catch it here
+            if (err) throw err;
+
+            // success case, the file was saved
+            console.log('Lyric saved!');
+        });
+        //console.log("Hello" + users);
+    });
+    //console.log("Hello");
+}, 5000); */
 
 // This calls the Device model to intergate the DB
 
 const ensureAuthenticated = require('./middleware/login-auth')
 
-let Site = require('./models/site');
-
 let User = require('./models/user');
 
-let Company = require('./models/company');
 
-let Repair = require('./models/repair');
-
-let Customer = require('./models/customer');
-
-let Outworker = require('./models/outworker');
 
 
 // Call Moongoose connection
@@ -109,12 +117,9 @@ app.get('/', ensureAuthenticated, function(req, res){
            return res.redirect('/admin/dashboard')
         }  */
         //console.log(user)
-    Site.find({'name': user.sites}, function(err, sites){
+
         User.find({}, function(err, users){
-            Company.find({}, function(err, companies){
-            Repair.countDocuments({'company':user.company}, function(err, numOfRepairs) {
-                Customer.countDocuments({'company': user.company}, function(err, numOfCustomers) {
-                    Outworker.countDocuments({'company': user.company}, function(err, numOfOutworkers) {
+            
                         User.countDocuments({'company': user.company}, function(err, numOfUsers) {
                             if(err){
                                 console.log(err)
@@ -122,65 +127,42 @@ app.get('/', ensureAuthenticated, function(req, res){
                             else{
                                 res.render('index', {
                                     title:'Dashboard',
-                                    sites: sites,
                                     users:users,
-                                    companies:companies,
-                                    numOfRepairs: numOfRepairs,
-                                    numOfCustomers: numOfCustomers,
-                                    numOfOutworkers:numOfOutworkers,
                                     numOfUsers:numOfUsers,
-                                    test:44,
                                 });
                             }
                         });        
                     });  
                 });
             });
-        });         
-    });
-});
-});
-});
+        
+
+
 
 // Route File
 
 //API Routes
 
 let users = require('./routes/users');
-let jwt = require('./routes/apiJWT');
-let apiDevices = require('./routes/apiDevices');
-let apiCompany = require('./routes/apiCompany');
-let apiOutworkers = require('./routes/apiOutworkers');
-let apiRepairs = require('./routes/apiRepairs');
-let apiCustomers = require('./routes/apiCustomer');
+let relays = require('./routes/relays');
+
 
 //Display Routes
 
-let site = require('./routes/sites');
-let outworkers = require('./routes/outworkers');
-let repairs = require('./routes/repairs');
-let customers = require('./routes/customers');
+
 let admin = require('./routes/admin');
 
 
 app.use('/users', users);
-app.use('/api/v1/devices/', apiDevices);
-app.use('/api/v1/company/', apiCompany);
-app.use('/api/v1/outworker/', apiOutworkers);
-app.use('/api/v1/repairs/', apiRepairs);
-app.use('/api/v1/customers/', apiCustomers);
-app.use('/api/v1/auth/', jwt);
+app.use('/relays', relays);
 
-app.use('/sites', site);
-app.use('/outworkers', outworkers);
-app.use('/repairs', repairs);
-app.use('/customers', customers);
+
 app.use('/admin', admin);
 
-app.use('*', function(req, res) {
+/* app.use('*', function(req, res) {
     res.status(404).end();
     res.redirect('/');
-}); 
+});  */
 
 const port = process.env.Port || 3000;
 

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
     admin:{
         type: String
-    },    
+    },
     name:{
         type: String
     },
@@ -15,15 +15,10 @@ const UserSchema = mongoose.Schema({
     phone:{
         type: String
     },
-    company:{
-        type: String
-    },
-    sites:[String],
     password:{
         type: String
-    }
-
-
+    },
+    streamkey:{type: String},
 });
 
 

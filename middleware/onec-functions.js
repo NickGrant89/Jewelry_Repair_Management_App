@@ -6,8 +6,6 @@ const jwt = require('jsonwebtoken');
 
 let User = require('../models/user');
 
-let Company = require('../models/company');
-
 
 exports.deCodeed = function (token) {
     

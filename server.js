@@ -32,6 +32,11 @@ var myInt = setInterval(function () {
 // This calls the Device model to intergate the DB
 
 const ensureAuthenticated = require('../onecEnterprise/middleware/login-auth')
+<<<<<<< HEAD
+=======
+
+let Site = require('./models/site');
+>>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
 
 let User = require('./models/user');
 
@@ -171,10 +176,13 @@ let admin = require('./routes/admin');
 
 app.use('/users', users);
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.use('/relays', relays);
 
 
 =======
+=======
+>>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
 app.use('/api/v1/filetransfer/', apiFileTf);
 app.use('/api/v1/devices/', apiDevices);
 app.use('/api/v1/company/', apiCompany);

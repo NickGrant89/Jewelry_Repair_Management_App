@@ -33,7 +33,10 @@ var myInt = setInterval(function () {
 
 const ensureAuthenticated = require('../onecEnterprise/middleware/login-auth')
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
 
 let Site = require('./models/site');
 >>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
@@ -177,10 +180,13 @@ let admin = require('./routes/admin');
 app.use('/users', users);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.use('/relays', relays);
 
 
 =======
+=======
+>>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
 =======
 >>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
 app.use('/api/v1/filetransfer/', apiFileTf);

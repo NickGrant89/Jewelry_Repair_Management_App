@@ -268,6 +268,7 @@ router.post('/register', [
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   let facebook = new Relay();
     facebook.name = 'Facebook';
     facebook.switch = req.body.switch;
@@ -306,6 +307,9 @@ router.post('/register', [
         }
     });
     console.log(facebook, youtube);
+=======
+  console.log(user);
+>>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
 =======
   console.log(user);
 >>>>>>> parent of d327425... Merge pull request #1 from digital1989/Image-Upload
